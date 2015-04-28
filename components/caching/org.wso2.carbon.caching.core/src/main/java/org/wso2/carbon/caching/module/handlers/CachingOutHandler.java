@@ -18,6 +18,7 @@ package org.wso2.carbon.caching.module.handlers;
 
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axis2.AxisFault;
+import org.apache.axis2.Constants;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.context.OperationContext;
 import org.apache.axis2.description.AxisModule;
@@ -86,6 +87,7 @@ public class CachingOutHandler extends CachingHandler {
         if (response !=null ) {
             CachingUtils.getCacheForService(msgContext.getAxisService().getName()).put(
                 response.getRequestHash(), response);
+            opCtx.setProperty(Constants.RESPONSE_WRITTEN, "SKIP");
         }
         return InvocationResponse.CONTINUE;
     }
